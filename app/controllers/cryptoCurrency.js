@@ -1,8 +1,8 @@
-const servicesUser = require('../services/cryptoCurrency');
-const { responseApiGetList } = require('../serializers/cryptoCurrency');
+const interactorsCripto = require('../interactors/cryptoCurrency');
+const servicesCripto = require('../services/cryptoCurrency');
 
 exports.addCryptoCurrency = (req, res, next) =>
-  servicesUser
+  servicesCripto
     .addCryptoCurrency(req.body)
     .then(() => {
       res.status(201).send('the crypto currency was correctly added');
@@ -10,7 +10,13 @@ exports.addCryptoCurrency = (req, res, next) =>
     .catch(next);
 
 exports.listCryptoCurrency = (req, res, next) =>
-  servicesUser
-    .getCryptoCurrency(req.body)
-    .then(data => res.status(201).send(responseApiGetList(data)))
+  interactorsCripto
+    .getListCryptoCurrencys(req.body)
+    .then(data => res.status(201).send(data))
+    .catch(next);
+
+exports.listTopCryptoCurrency = (req, res, next) =>
+  interactorsCripto
+    .getListTopCryptoCurrencys(req)
+    .then(data => res.status(201).send(data))
     .catch(next);

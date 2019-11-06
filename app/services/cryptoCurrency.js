@@ -1,6 +1,5 @@
 const error = require('../errors');
 const { CryptoCurrency } = require('../models');
-const servicesUser = require('../services/users');
 const request = require('request-promise');
 const config = require('../../config');
 const { apikey, url } = config.common.apiBraveNewCoin;
@@ -12,13 +11,6 @@ const addCryptoCurrency = data =>
       throw error.databaseError(err.message);
     });
 
-const getListCryptoCurrency = userId =>
-  CryptoCurrency.findAndCountAll({
-    where: { userId },
-    attributes: ['id', 'cryptoId', 'name']
-  }).catch(err => {
-    throw error.databaseError(err.message);
-  });
 const getApi = urlApi => {
   const options = {
     uri: urlApi,
@@ -31,7 +23,8 @@ const getApi = urlApi => {
     throw error.braveNewCoinApiError(err.message);
   });
 };
-const getListcryptoCurrencys = (cryptoCurrencys, preferredCurrency) =>
+
+exports.getListcryptoCurrencys = (cryptoCurrencys, preferredCurrency) =>
   Promise.all(
     cryptoCurrencys.rows.map(element => {
       const urlApi = `${url}ticker?coin=${element.cryptoId}&show=${preferredCurrency}`;
@@ -40,15 +33,6 @@ const getListcryptoCurrencys = (cryptoCurrencys, preferredCurrency) =>
       });
     })
   );
-
-exports.getCryptoCurrency = async ({ decode }) => {
-  const user = await servicesUser.findOneUser(decode.userName);
-  const cryptoCurrencys = await getListCryptoCurrency(user.id);
-  if (cryptoCurrencys.count > 0) {
-    return getListcryptoCurrencys(cryptoCurrencys, user.preferredCurrency);
-  }
-  return [];
-};
 
 exports.addCryptoCurrency = req => {
   try {
@@ -66,6 +50,14 @@ exports.findOneCryptoCurrency = (cryptoId, userId) =>
   CryptoCurrency.findOne({
     where: { cryptoId, userId },
     attributes: ['id']
+  }).catch(err => {
+    throw error.databaseError(err.message);
+  });
+
+exports.getListCryptoCurrency = userId =>
+  CryptoCurrency.findAndCountAll({
+    where: { userId },
+    attributes: ['id', 'cryptoId', 'name']
   }).catch(err => {
     throw error.databaseError(err.message);
   });

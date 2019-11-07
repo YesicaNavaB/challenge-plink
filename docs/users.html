@@ -1,0 +1,34 @@
+<html><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" /><script src="https://code.jquery.com/jquery-1.12.2.min.js"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script><style> pre { width: 95%; } </style></head><body><div class="container"><div class="jumbotron"><h1>Users</h1></div><div class="panel panel-default"><div class="panel-heading" role="tab" id="heading-users-sign_up-POST"><h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapse-users-sign_up-POST" href="#collapse-users-sign_up-POST">POST /users/sign_up</a></h4></div><div id="collapse-users-sign_up-POST" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-users-sign_up-POST"><div class="panel-body"><h4>Request Data</h4><div class="container"><h5>Headers</h5><pre>{
+  "content-type": "application/json",
+  "accept": "application/json",
+  "content-length": 106
+}</pre><h5>Body</h5><pre>{
+  "name": "Plink",
+  "lastName": "Banco",
+  "userName": "plinkUser",
+  "password": "plink345",
+  "preferredCurrency": "USD"
+}</pre></div></div><div class="panel-body"><h4>Response Data</h4><div class="container"><h5>Status: 201</h5><h5>Headers</h5><pre>{
+  "content-type": "application/json",
+  "accept": "application/json",
+  "content-length": 106
+}</pre><h5>Body</h5><pre>{
+  "message": "the user was created correctly",
+  "user": {
+    "userName": "plinkUser"
+  }
+}</pre></div></div></div></div><div class="panel panel-default"><div class="panel-heading" role="tab" id="heading-users-sign_in-POST"><h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapse-users-sign_in-POST" href="#collapse-users-sign_in-POST">POST /users/sign_in</a></h4></div><div id="collapse-users-sign_in-POST" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-users-sign_in-POST"><div class="panel-body"><h4>Request Data</h4><div class="container"><h5>Headers</h5><pre>{
+  "content-type": "application/json",
+  "accept": "application/json",
+  "content-length": 46
+}</pre><h5>Body</h5><pre>{
+  "userName": "plinkUser",
+  "password": "plink345"
+}</pre></div></div><div class="panel-body"><h4>Response Data</h4><div class="container"><h5>Status: 200</h5><h5>Headers</h5><pre>{
+  "content-type": "application/json",
+  "accept": "application/json",
+  "content-length": 46
+}</pre><h5>Body</h5><pre>{
+  "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6InBsaW5rVXNlciIsImV4cGlyZXNBdCI6MTU3MzE1ODk3M30.slt1XT6G52i4AzgClnuhFZYKM9ofJ2Gzs0nT5X0Rf5w",
+  "expiresIn": "7200 segundos"
+}</pre></div></div></div></div></div></body></html>

@@ -1,7 +1,7 @@
-const { schemaAddCryptoCurrencyYup } = require('../helpers/schemasYup');
+const { schemaAddCryptoCurrencyYup } = require('../helpers/schemas_yup');
 const error = require('../errors');
 const logger = require('../logger');
-const servicesCrypto = require('../services/cryptoCurrency');
+const servicesCrypto = require('../services/crypto_currencies');
 const servicesUser = require('../services/users');
 
 exports.cryptoCurrencyMiddleware = async (req, res, next) => {
@@ -19,7 +19,7 @@ exports.cryptoCurrencyMiddleware = async (req, res, next) => {
     return next(error.cryptoCurrencyError('this crypto currency has already been added for this user'));
   }
   const validateCrypto = await servicesCrypto.validateCryptoCurrency(req.body.cryptoId, req.body.name);
-  if (validateCrypto === undefined) {
+  if (validateCrypto.success === false) {
     return next(error.cryptoCurrencyError('the crypto currency is not correct'));
   }
   return next();

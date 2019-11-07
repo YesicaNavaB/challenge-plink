@@ -1,11 +1,11 @@
 const request = require('supertest'),
   app = require('../app'),
   dictum = require('dictum.js');
-const { create } = require('../test/factories/user');
-const { createCrypto } = require('../test/factories/cryptoCurrency');
-const { serializerCrypto } = require('../test/fixture/listCryptoCurrencys');
+const { create } = require('./factories/user');
+const { createCrypto } = require('../test/factories/crypto_currencies');
+const { serializerCrypto } = require('./fixture/list_currencies');
 
-const { encodeToken } = require('../app/helpers/token');
+const { encodeToken } = require('../app/helpers/tokens');
 
 const userName = 'plinkUser',
   password = 'plink345',
@@ -28,7 +28,7 @@ describe('add crypto currency', () => {
     }).then(() => {
       const token = encodeToken(userName);
       request(app)
-        .post('/cryptocurrency/add')
+        .post('/crypto_currencies')
         .send({
           name: nameCrypto,
           cryptoId
@@ -36,7 +36,7 @@ describe('add crypto currency', () => {
         .set({ Accept: 'application/json', Authorization: token })
         .then(result => {
           expect(result.statusCode).toBe(201);
-          expect(result.text).toBe('the crypto currency was correctly added');
+          expect(result.body.message).toBe('the crypto currency was correctly added');
           dictum.chai(result, 'should allow to add a crypto currency to a user');
           done();
         });
@@ -53,10 +53,10 @@ describe('add crypto currency', () => {
     }).then(() => {
       const token = encodeToken(userName);
       request(app)
-        .post('/cryptocurrency/add')
+        .post('/crypto_currencies')
         .send({
-          name: 'ppp',
-          cryptoId: 'ppp'
+          name: 'YHT',
+          cryptoId: 'YHT'
         })
         .set({ Accept: 'application/json', Authorization: token })
         .then(result => {
@@ -83,11 +83,11 @@ describe('crypto currencys List', () => {
       .then(() => {
         const token = encodeToken(userName);
         request(app)
-          .get('/cryptocurrency/list')
+          .get('/crypto_currencies')
           .send({ userName, password })
           .set({ Accept: 'application/json', Authorization: token })
           .then(response => {
-            expect(response.statusCode).toBe(201);
+            expect(response.statusCode).toBe(200);
             expect(response.body).toEqual(serializerCrypto);
             dictum.chai(response, 'should list the user crypto currency');
             done();

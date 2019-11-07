@@ -1,9 +1,9 @@
-const { listCryptoCurrency, listDigitalSymbols } = require('../fixture/listCryptoCurrencys');
+const { listCryptoCurrency, listCryptoCurrencyError } = require('../fixture/list_currencies');
 
 module.exports = jest.fn(param => {
-  const search = param.uri.search('digital-currency-symbols');
-  if (search === -1) {
-    return Promise.resolve(listCryptoCurrency);
+  const search = param.uri.search('coin=YHT');
+  if (search !== -1) {
+    return Promise.resolve(listCryptoCurrencyError);
   }
-  return Promise.resolve(listDigitalSymbols);
+  return Promise.resolve(listCryptoCurrency);
 });

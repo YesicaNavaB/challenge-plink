@@ -1,7 +1,7 @@
 const servicesUser = require('../services/users');
-const servicesCripto = require('../services/cryptoCurrency');
-const { responseApiGetList } = require('../serializers/cryptoCurrency');
-const { orderArrayByField } = require('../helpers/arrayField');
+const servicesCripto = require('../services/crypto_currencies');
+const { responseApiGetList } = require('../serializers/crypto_currencies');
+const { orderArrayByField } = require('../helpers/array_fields');
 
 const getApiData = async ({ userName }) => {
   const user = await servicesUser.findOneUser(userName);

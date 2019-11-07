@@ -1,4 +1,4 @@
-exports.serializerCrypto = [{ price: '247.092992', name: 'Bitcoin', fountain: 'BraveNewCoin' }];
+exports.serializerCrypto = [{ price: '247.092992', name: 'Bitcoin', source: 'BraveNewCoin' }];
 
 exports.listCryptoCurrency = {
   success: true,
@@ -14,6 +14,12 @@ exports.listCryptoCurrency = {
   currency: 'USD',
   currency_name: 'United States Dollar'
 };
+
+exports.listCryptoCurrencyError = {
+  success: false,
+  error: 'The coin specified is not available'
+};
+
 exports.listDigitalSymbols = {
   success: true,
   source: 'BraveNewCoin',

@@ -3,14 +3,14 @@ const {
   addCryptoCurrency,
   listCryptoCurrency,
   listTopCryptoCurrency
-} = require('./controllers/cryptoCurrency');
+} = require('./controllers/crypto_currencies');
 const { signUpMiddleware, signInMiddleware, validatetokenMiddleware } = require('./middlewares/users');
-const { cryptoCurrencyMiddleware } = require('./middlewares/cryptoCurrency');
+const { cryptoCurrencyMiddleware } = require('./middlewares/crypto_currencies');
 
 exports.init = app => {
-  app.post('/user/signup', signUpMiddleware, signUp);
-  app.post('/user/signin', signInMiddleware, signIn);
-  app.post('/cryptocurrency/add', [validatetokenMiddleware, cryptoCurrencyMiddleware], addCryptoCurrency);
-  app.get('/cryptocurrency/list', validatetokenMiddleware, listCryptoCurrency);
-  app.get('/cryptocurrency/toplist', validatetokenMiddleware, listTopCryptoCurrency);
+  app.post('/users/sign_up', signUpMiddleware, signUp);
+  app.post('/users/sign_in', signInMiddleware, signIn);
+  app.post('/crypto_currencies', [validatetokenMiddleware, cryptoCurrencyMiddleware], addCryptoCurrency);
+  app.get('/crypto_currencies', validatetokenMiddleware, listCryptoCurrency);
+  app.get('/crypto_currencies/top', validatetokenMiddleware, listTopCryptoCurrency);
 };

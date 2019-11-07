@@ -1,9 +1,9 @@
 const error = require('../errors');
 const logger = require('../logger');
-const { schemaSignUpYup, schemaSignInYup, validateTokenMiddleware } = require('../helpers/schemasYup');
+const { schemaSignUpYup, schemaSignInYup, validateTokenMiddleware } = require('../helpers/schemas_yup');
 const { findOneUser } = require('../services/users');
 const bcrypt = require('bcryptjs');
-const { decodedToken } = require('../helpers/token');
+const { decodedToken } = require('../helpers/tokens');
 const config = require('../../config');
 const { expiration } = config.common.tokens;
 

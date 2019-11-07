@@ -2,7 +2,7 @@ const request = require('supertest');
 const dictum = require('dictum.js');
 const app = require('../app');
 const { create } = require('../test/factories/user');
-const { encodeToken } = require('../app/helpers/token');
+const { encodeToken } = require('../app/helpers/tokens');
 
 const userName = 'plinkUser',
   password = 'plink345',
@@ -13,7 +13,7 @@ const userName = 'plinkUser',
 describe('User registration', () => {
   test('should register with all the fields correctly', done => {
     request(app)
-      .post('/user/signup')
+      .post('/users/sign_up')
       .send({
         name,
         lastName,
@@ -24,7 +24,7 @@ describe('User registration', () => {
       .set('Accept', 'application/json')
       .then(response => {
         expect(response.statusCode).toBe(201);
-        expect(response.text).toBe('the user was created correctly');
+        expect(response.body.message).toBe('the user was created correctly');
         dictum.chai(response, 'should register with all the fields correctly');
         done();
       });
@@ -32,7 +32,7 @@ describe('User registration', () => {
 
   test('should not register because the password not is alphanumeric', done => {
     request(app)
-      .post('/user/signup')
+      .post('/users/sign_up')
       .send({
         name,
         lastName,
@@ -50,7 +50,7 @@ describe('User registration', () => {
 
   test('should not register because the password not 8 chars long', done => {
     request(app)
-      .post('/user/signup')
+      .post('/users/sign_up')
       .send({
         name,
         lastName,
@@ -77,7 +77,7 @@ describe('User sign in test, with their respective fields', () => {
       preferredCurrency
     }).then(() => {
       request(app)
-        .post('/user/signin')
+        .post('/users/sign_in')
         .send({ userName, password })
         .set('Accept', 'application/json')
         .then(response => {
@@ -99,7 +99,7 @@ describe('User sign in test, with their respective fields', () => {
       preferredCurrency
     }).then(() => {
       request(app)
-        .post('/user/signin')
+        .post('/users/sign_in')
         .send({ userName: 'UserPlinkTest', password })
         .set('Accept', 'application/json')
         .then(response => {

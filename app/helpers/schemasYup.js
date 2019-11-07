@@ -8,7 +8,7 @@ exports.schemaSignUpYup = yup.object().shape({
     .string()
     .required('password is required')
     .min(8, 'Must be at least 8 chars long')
-    .matches(regexAlphanumeric, 'email is not valid or does not belong to the wolox domain'),
+    .matches(regexAlphanumeric, 'Must be only alphanumeric chars'),
   userName: yup.string().required('userName is required'),
   preferredCurrency: yup
     .string()

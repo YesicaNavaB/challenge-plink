@@ -2,6 +2,7 @@ const error = require('../errors');
 const { CryptoCurrency } = require('../models');
 const request = require('request-promise');
 const config = require('../../config');
+const { searchArray } = require('../helpers/arrayField');
 const { apikey, url } = config.common.apiBraveNewCoin;
 
 const addCryptoCurrency = data =>
@@ -61,3 +62,16 @@ exports.getListCryptoCurrency = userId =>
   }).catch(err => {
     throw error.databaseError(err.message);
   });
+
+exports.validateCryptoCurrency = (cryptoId, name) => {
+  const urlApi = `${url}digital-currency-symbols`;
+  return getApi(urlApi)
+    .then(response => {
+      const digitalCurrencies = response.digital_currencies;
+      const search = searchArray(digitalCurrencies, cryptoId, name);
+      return search;
+    })
+    .catch(err => {
+      throw error.braveNewCoinApiError(err.message);
+    });
+};

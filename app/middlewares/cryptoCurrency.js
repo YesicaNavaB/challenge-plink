@@ -18,5 +18,9 @@ exports.cryptoCurrencyMiddleware = async (req, res, next) => {
   if (crypto !== null) {
     return next(error.cryptoCurrencyError('this crypto currency has already been added for this user'));
   }
+  const validateCrypto = await servicesCrypto.validateCryptoCurrency(req.body.cryptoId, req.body.name);
+  if (validateCrypto === undefined) {
+    return next(error.cryptoCurrencyError('the crypto currency is not correct'));
+  }
   return next();
 };

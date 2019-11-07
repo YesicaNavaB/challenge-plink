@@ -3,6 +3,8 @@ const { CryptoCurrency } = require('../models');
 const request = require('request-promise');
 const config = require('../../config');
 const { apikey, url } = config.common.apiBraveNewCoin;
+const { responseApiGetList } = require('../serializers/crypto_currencies');
+const { orderArrayByField } = require('../helpers/array_fields');
 
 const getApi = urlApi => {
   const options = {
@@ -17,7 +19,7 @@ const getApi = urlApi => {
   });
 };
 
-exports.getListcryptoCurrencies = (cryptoCurrencies, preferredCurrency) =>
+const getListCurrencies = (cryptoCurrencies, preferredCurrency) =>
   Promise.all(
     cryptoCurrencies.rows.map(element => {
       const urlApi = `${url}ticker?coin=${element.cryptoId}&show=${preferredCurrency}`;
@@ -26,6 +28,26 @@ exports.getListcryptoCurrencies = (cryptoCurrencies, preferredCurrency) =>
       });
     })
   );
+
+const getApiData = async req => {
+  const cryptoCurrencies = await CryptoCurrency.getAllByUserId(req.userId);
+  if (cryptoCurrencies.count > 0) {
+    return getListCurrencies(cryptoCurrencies, req.preferredCurrency);
+  }
+  return [];
+};
+
+exports.getListCryptoCurrencies = async req => {
+  const response = await getApiData(req);
+  return responseApiGetList(response);
+};
+
+exports.getListTopCryptoCurrencies = async req => {
+  const response = await getApiData(req.body.decode);
+  const mapResponse = responseApiGetList(response);
+  const order = orderArrayByField(mapResponse, req.query.order).slice(0, 3);
+  return order;
+};
 
 exports.addCryptoCurrency = req => {
   try {

@@ -1,5 +1,5 @@
-const interactorsCripto = require('../interactors/crypto_currencies');
 const servicesCripto = require('../services/crypto_currencies');
+const { User } = require('../models');
 
 exports.addCryptoCurrency = (req, res, next) =>
   servicesCripto
@@ -13,13 +13,17 @@ exports.addCryptoCurrency = (req, res, next) =>
     .catch(next);
 
 exports.listCryptoCurrency = (req, res, next) =>
-  interactorsCripto
-    .getListCryptoCurrencies(req.body)
+  User.getOneByUserName(req.body.decode.userName)
+    .then(user => {
+      req.body.userId = user.id;
+      req.body.preferredCurrency = user.preferredCurrency;
+      return servicesCripto.getListCryptoCurrencies(req.body);
+    })
     .then(data => res.status(200).send(data))
     .catch(next);
 
 exports.listTopCryptoCurrency = (req, res, next) =>
-  interactorsCripto
+  servicesCripto
     .getListTopCryptoCurrencies(req)
     .then(data => res.status(200).send(data))
     .catch(next);

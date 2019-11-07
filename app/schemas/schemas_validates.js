@@ -1,5 +1,5 @@
 const yup = require('yup');
-const { regexAlphanumeric, regexCurrency } = require('./regexs');
+const { regexAlphanumeric, regexCurrency } = require('../helpers/regexs');
 
 exports.schemaSignUpYup = yup.object().shape({
   name: yup.string().required('name is required'),

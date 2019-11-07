@@ -35,5 +35,9 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'users'
     }
   );
+  User.createModel = user => User.create(user);
+
+  User.getOneByUserName = userName => User.findOne({ where: { userName } });
+
   return User;
 };

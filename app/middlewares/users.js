@@ -1,7 +1,7 @@
 const error = require('../errors');
 const logger = require('../logger');
-const { schemaSignUpYup, schemaSignInYup, validateTokenMiddleware } = require('../helpers/schemas_yup');
-const { findOneUser } = require('../services/users');
+const { schemaSignUpYup, schemaSignInYup, validateTokenMiddleware } = require('../schemas/schemas_validates');
+const { User } = require('../models');
 const bcrypt = require('bcryptjs');
 const { decodedToken } = require('../helpers/tokens');
 const config = require('../../config');
@@ -14,7 +14,7 @@ exports.signUpMiddleware = async (req, res, next) => {
     logger.error(err.errors);
     return next(error.signUpError(err.errors));
   }
-  const userExists = await findOneUser(req.body.userName);
+  const userExists = await User.getOneByUserName(req.body.userName);
   if (userExists !== null) {
     return next(error.databaseError('User name already exists'));
   }
@@ -28,7 +28,7 @@ exports.signInMiddleware = async (req, res, next) => {
     logger.error(err.errors);
     return next(error.signUpError(err.errors));
   }
-  const result = await findOneUser(req.body.userName);
+  const result = await User.getOneByUserName(req.body.userName);
   if (!result) {
     return next(error.signInError('user does not exist'));
   }
@@ -50,7 +50,7 @@ exports.validatetokenMiddleware = async (req, res, next) => {
     return next(error.validateTokenError(err.errors));
   }
   req.body.decode = decodedToken(req.header('Authorization'));
-  const result = await findOneUser(req.body.decode.userName);
+  const result = await User.getOneByUserName(req.body.decode.userName);
   if (result === null) {
     return next(error.validateTokenError('user does not exist'));
   }

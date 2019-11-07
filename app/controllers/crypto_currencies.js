@@ -14,12 +14,12 @@ exports.addCryptoCurrency = (req, res, next) =>
 
 exports.listCryptoCurrency = (req, res, next) =>
   interactorsCripto
-    .getListCryptoCurrencys(req.body)
+    .getListCryptoCurrencies(req.body)
     .then(data => res.status(200).send(data))
     .catch(next);
 
 exports.listTopCryptoCurrency = (req, res, next) =>
   interactorsCripto
-    .getListTopCryptoCurrencys(req)
+    .getListTopCryptoCurrencies(req)
     .then(data => res.status(200).send(data))
     .catch(next);

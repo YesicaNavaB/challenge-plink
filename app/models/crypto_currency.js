@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       paranoid: true,
       underscored: true,
       freezeTableName: true,
-      tableName: 'cryptoCurrencys'
+      tableName: 'cryptoCurrencies'
     }
   );
 
@@ -30,6 +30,13 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'userId'
     });
   };
+
+  CryptoCurrency.createModel = cryptoCurrency => CryptoCurrency.create(cryptoCurrency);
+
+  CryptoCurrency.getOneByIdAndUserId = (cryptoId, userId) =>
+    CryptoCurrency.findOne({ where: { cryptoId, userId } });
+
+  CryptoCurrency.getAllByUserId = userId => CryptoCurrency.findAndCountAll({ where: { userId } });
 
   return CryptoCurrency;
 };

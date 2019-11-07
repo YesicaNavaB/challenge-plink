@@ -68,7 +68,7 @@ describe('add crypto currency', () => {
   });
 });
 
-describe('crypto currencys List', () => {
+describe('crypto currencies List', () => {
   test('should list the user crypto currency', done => {
     create({
       name,

@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('cryptoCurrencys', {
+    queryInterface.createTable('cryptoCurrencies', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -25,5 +25,5 @@ module.exports = {
       updated_at: Sequelize.DATE,
       deleted_at: Sequelize.DATE
     }),
-  down: queryInterface => queryInterface.dropTable('cryptoCurrencys')
+  down: queryInterface => queryInterface.dropTable('cryptoCurrencies')
 };

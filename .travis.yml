@@ -6,7 +6,7 @@ node_js:
 sudo: true
 
 env:
-  - CXX=g++-4.8 NODE_ENV=testing SECRET=xxx EXPIRATION=7200 APIBRAVENEWCOIN=https://bravenewcoin-v1.p.rapidapi.com/ APIKEY=7945704872msh114c172508acb06p1e72a2jsn079200953c54
+  - CXX=g++-4.8 NODE_ENV=testing SECRET=xxx EXPIRATION_TEST=1 APIBRAVENEWCOIN=https://bravenewcoin-v1.p.rapidapi.com/ APIKEY=7945704872msh114c172508acb06p1e72a2jsn079200953c54
 addons:
   apt:
     sources:

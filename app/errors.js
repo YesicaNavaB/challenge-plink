@@ -12,9 +12,6 @@ exports.signUpError = message => internalError(message, exports.SIGN_UP_ERROR);
 exports.SIGN_IN_ERROR = 'sign_in_error';
 exports.signInError = message => internalError(message, exports.SIGN_IN_ERROR);
 
-exports.VALIDATE_USER_ERROR = 'validate_user_error';
-exports.validateUserError = message => internalError(message, exports.VALIDATE_USER_ERROR);
-
 exports.CRYPTO_CURRENCY_ERROR = 'add_crypto_currency_error';
 exports.cryptoCurrencyError = message => internalError(message, exports.CRYPTO_CURRENCY_ERROR);
 

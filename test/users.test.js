@@ -10,8 +10,9 @@ const userName = 'plinkUser',
   lastName = 'Banco',
   preferredCurrency = 'USD';
 
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 describe('User registration', () => {
-  test('should register with all the fields correctly', done => {
+  test('should create a user with the fields of (userName, passsword, name, lastname, preferredCurrency)', done => {
     request(app)
       .post('/users/sign_up')
       .send({
@@ -30,7 +31,7 @@ describe('User registration', () => {
       });
   });
 
-  test('should not register because the password not is alphanumeric', done => {
+  test('you should not create a username when the password is not alphanumeric', done => {
     request(app)
       .post('/users/sign_up')
       .send({
@@ -48,7 +49,7 @@ describe('User registration', () => {
       });
   });
 
-  test('should not register because the password not 8 chars long', done => {
+  test('you should not create a username when the password is not 8 characters long', done => {
     request(app)
       .post('/users/sign_up')
       .send({
@@ -67,8 +68,8 @@ describe('User registration', () => {
   });
 });
 
-describe('User sign in test, with their respective fields', () => {
-  test('should sign in with all the fields correctly', done => {
+describe('should allow the user to log in', () => {
+  test('you should be logged in when you enter the correct username and password', done => {
     create({
       name,
       lastName,
@@ -90,7 +91,7 @@ describe('User sign in test, with their respective fields', () => {
     });
   });
 
-  test('should not sign in with all the fields correctly', done => {
+  test('you should not log in when you enter the wrong username and password', done => {
     create({
       name,
       lastName,
@@ -104,9 +105,39 @@ describe('User sign in test, with their respective fields', () => {
         .set('Accept', 'application/json')
         .then(response => {
           expect(response.statusCode).toBe(401);
-          expect(response.text).toString('');
+          expect(response.body.message).toBe('user does not exist');
           done();
         });
     });
+  });
+});
+
+describe('the expiration of the token will be validated ', () => {
+  test('you should not allow a service to be consumed when the token is expired', done => {
+    create({
+      name,
+      lastName,
+      userName,
+      password,
+      preferredCurrency
+    }).then(() =>
+      request(app)
+        .post('/users/sign_in')
+        .send({ userName, password })
+        .set('Accept', 'application/json')
+        .then(() => {
+          const token = encodeToken(userName);
+          delay(2000).then(() => {
+            request(app)
+              .get('/crypto_currencies')
+              .set({ Accept: 'application/json', Authorization: token })
+              .then(result => {
+                expect(result.statusCode).toBe(401);
+                expect(result.body.message).toBe('the token has expired');
+                done();
+              });
+          });
+        })
+    );
   });
 });

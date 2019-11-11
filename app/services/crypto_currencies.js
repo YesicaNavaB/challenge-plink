@@ -43,7 +43,7 @@ exports.getListCryptoCurrencies = async req => {
 };
 
 exports.getListTopCryptoCurrencies = async req => {
-  const response = await getApiData(req.body.decode);
+  const response = await getApiData(req);
   const mapResponse = responseApiGetList(response);
   const order = orderArrayByField(mapResponse, req.query.order).slice(0, 3);
   return order;

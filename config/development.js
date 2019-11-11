@@ -8,7 +8,7 @@ exports.config = {
       secret: process.env.SECRET
     },
     tokens: {
-      expiration: process.env.EXPIRATION_DEV
+      expiration: process.env.EXPIRATION
     }
   },
   isDevelopment: true

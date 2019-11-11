@@ -6,9 +6,6 @@ exports.config = {
     },
     jwt: {
       secret: process.env.SECRET
-    },
-    tokens: {
-      expiration: process.env.EXPIRATION
     }
   },
   isProduction: true

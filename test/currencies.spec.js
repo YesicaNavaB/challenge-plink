@@ -43,7 +43,7 @@ describe('add crypto currency', () => {
     });
   });
 
-  test('should not allow to add a crypto currency to a user', done => {
+  test('should not allow adding a cryptographic coin to a user, when the crypto coin does not exist', done => {
     create({
       name,
       lastName,
@@ -68,7 +68,7 @@ describe('add crypto currency', () => {
   });
 });
 
-describe('crypto currencies List', () => {
+describe('list of crypto currencies', () => {
   test('should list the user crypto currency', done => {
     create({
       name,
@@ -84,7 +84,6 @@ describe('crypto currencies List', () => {
         const token = encodeToken(userName);
         request(app)
           .get('/crypto_currencies')
-          .send({ userName, password })
           .set({ Accept: 'application/json', Authorization: token })
           .then(response => {
             expect(response.statusCode).toBe(200);

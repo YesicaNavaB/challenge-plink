@@ -23,7 +23,11 @@ exports.listCryptoCurrency = (req, res, next) =>
     .catch(next);
 
 exports.listTopCryptoCurrency = (req, res, next) =>
-  servicesCripto
-    .getListTopCryptoCurrencies(req)
+  User.getOneByUserName(req.body.decode.userName)
+    .then(user => {
+      req.body.userId = user.id;
+      req.body.preferredCurrency = user.preferredCurrency;
+      return servicesCripto.getListCryptoCurrencies(req.body);
+    })
     .then(data => res.status(200).send(data))
     .catch(next);

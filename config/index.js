@@ -42,9 +42,6 @@ const config = {
       header_name: 'authorization',
       secret: process.env.NODE_API_SESSION_SECRET
     },
-    tokens: {
-      expiration: process.env.EXPIRATION
-    },
     apiBraveNewCoin: {
       url: process.env.APIBRAVENEWCOIN,
       apikey: process.env.APIKEY
